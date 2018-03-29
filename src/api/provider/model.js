@@ -1,4 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
+import services from '../../data/services.json';
+
+const serviceIds = services.map(service => service.id);
 
 const serviceSchema = new Schema({
   name: {
@@ -7,16 +10,24 @@ const serviceSchema = new Schema({
     trim: true
   },
   address: {
-    type: String
+    type: String,
+    trim: true
   },
   description: {
-    type: String
+    type: String,
+    trim: true
   },
   rating: {
-    type: Number
+    type: Number,
+    default: 0
   },
-  serviceTypes: {
-
+  services: {
+    type: [
+      {
+        type: String,
+        enum: serviceIds
+      }
+    ]
   },
   picture: {
     type: String,

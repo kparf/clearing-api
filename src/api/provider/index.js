@@ -7,6 +7,7 @@ import { schema } from './model';
 export Provider, { schema } from './model';
 
 const router = new Router();
+const {name, address, description, rating, services, picture} = schema.tree;
 
 /**
  * @api {get} /providers Retrieve providers
@@ -38,10 +39,17 @@ router.get('/:id',
  * @apiName CreateProvider
  * @apiGroup Provider
  * @apiPermission public
+ * @apiParam {String} name Provider's name.
+ * @apiParam {String} address Provider's address.
+ * @apiParam {String} description Provider's description.
+ * @apiParam {Number} rating Provider's rating.
+ * @apiParam {String[]} services Provider's services.
+ * @apiParam {String} picture Provider's picture.
  * @apiSuccess (Sucess 201) {Object} provider Provider's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  */
 router.post('/',
+  body({name, address, description, rating, services, picture}),
   create);
 
 /**
@@ -49,11 +57,18 @@ router.post('/',
  * @apiName UpdateProvider
  * @apiGroup Provider
  * @apiPermission public
+ * @apiParam {String} name Provider's name.
+ * @apiParam {String} address Provider's address.
+ * @apiParam {String} description Provider's description.
+ * @apiParam {Number} rating Provider's rating.
+ * @apiParam {String[]} services Provider's services.
+ * @apiParam {String} picture Provider's picture.
  * @apiSuccess {Object} provider Provider's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Provider not found.
  */
 router.put('/:id',
+  body({name, address, description, rating, services, picture}),
   update);
 
 /**
