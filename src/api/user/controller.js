@@ -1,21 +1,21 @@
-import { success, notFound } from '../../services/response/'
-import { User } from '.'
+import { success, notFound } from '../../services/response/';
+import { User } from '.';
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   User.find(query, select, cursor)
     .then((users) => users.map((user) => user.view()))
     .then(success(res))
-    .catch(next)
+    .catch(next);
 
 export const show = ({ params }, res, next) =>
   User.findById(params.id)
     .then(notFound(res))
     .then((user) => user ? user.view() : null)
     .then(success(res))
-    .catch(next)
+    .catch(next);
 
 export const showMe = ({ user }, res) =>
-  res.json(user.view(true))
+  res.json(user.view(true));
 
 export const create = ({ bodymen: { body } }, res, next) =>
   User.create(body)
@@ -28,11 +28,11 @@ export const create = ({ bodymen: { body } }, res, next) =>
           valid: false,
           param: 'email',
           message: 'email already registered'
-        })
+        });
       } else {
-        next(err)
+        next(err);
       }
-    })
+    });
 
 export const update = ({ bodymen: { body }, params, user }, res, next) =>
   User.findById(params.id === 'me' ? user.id : params.id)
@@ -46,14 +46,14 @@ export const update = ({ bodymen: { body }, params, user }, res, next) =>
           valid: false,
           message: 'You can\'t change other user\'s data'
         })
-        return null
+        return null;
       }
-      return result
+      return result;
     })
     .then((user) => user ? Object.assign(user, body).save() : null)
     .then((user) => user ? user.view(true) : null)
     .then(success(res))
-    .catch(next)
+    .catch(next);
 
 export const updatePassword = ({ bodymen: { body }, params, user }, res, next) =>
   User.findById(params.id === 'me' ? user.id : params.id)
@@ -66,19 +66,19 @@ export const updatePassword = ({ bodymen: { body }, params, user }, res, next) =
           valid: false,
           param: 'password',
           message: 'You can\'t change other user\'s password'
-        })
-        return null
+        });
+        return null;
       }
-      return result
+      return result;
     })
     .then((user) => user ? user.set({ password: body.password }).save() : null)
     .then((user) => user ? user.view(true) : null)
     .then(success(res))
-    .catch(next)
+    .catch(next);
 
 export const destroy = ({ params }, res, next) =>
   User.findById(params.id)
     .then(notFound(res))
     .then((user) => user ? user.remove() : null)
     .then(success(res, 204))
-    .catch(next)
+    .catch(next);
