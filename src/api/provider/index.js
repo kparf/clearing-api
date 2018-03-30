@@ -77,7 +77,7 @@ router.put('/:id',
  * @apiGroup Provider
  * @apiPermission public
  * @apiSuccess (Success 204) 204 No Content.
- * @apiError 404 User not found.
+ * @apiError 404 Provider not found.
  */
 router.delete('/:id',
   destroy);
