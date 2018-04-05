@@ -3,7 +3,7 @@ export const success = (res, status) => (entity) => {
     res.status(status || 200).json(entity);
   }
   return null;
-}
+};
 
 export const notFound = (res) => (entity) => {
   if (entity) {
@@ -23,4 +23,4 @@ export const authorOrAdmin = (res, user, userField) => (entity) => {
     res.status(401).end();
   }
   return null;
-}
+};
