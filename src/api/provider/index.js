@@ -40,6 +40,7 @@ router.get('/:id',
  * @apiGroup Provider
  * @apiPermission public
  * @apiParam {String} name Provider's name.
+ * @apiParam {String} email Provider's email.
  * @apiParam {String} address Provider's address.
  * @apiParam {String} description Provider's description.
  * @apiParam {Number} rating Provider's rating.

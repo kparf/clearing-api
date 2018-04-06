@@ -7,7 +7,16 @@ const serviceSchema = new Schema({
   name: {
     type: String,
     index: true,
+    required: true,
     trim: true
+  },
+  email: {
+    type: String,
+    match: /^\S+@\S+\.\S+$/,
+    required: true,
+    unique: true,
+    trim: true,
+    lowercase: true
   },
   address: {
     type: String,

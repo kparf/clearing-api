@@ -1,24 +1,12 @@
 import { success, notFound } from '../../services/response/';
 import { Service } from '.';
-export const VIEW_FIELDS = ['name', 'createdAt'];
+import { createViewList } from '../../services/view';
 
-function view (service, viewFields, withoutId) {
-  let view = {};
-  let fields = viewFields;
-  fields.forEach((field) => { view[field] = service[field]; });
-  if (!withoutId) {
-    view.id = service.id;
-  }
-  return view;
-}
-
-function viewList (services, viewFields) {
-  return services.map(service => view(service, viewFields));
-}
+const viewList = createViewList(['name', 'createdAt']);
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Service.find(query, select, cursor)
-    .then((entity) => viewList(entity, VIEW_FIELDS))
+    .then((services) => viewList(services))
     .then(success(res))
     .catch(next);
 
