@@ -2,12 +2,12 @@ import { Router } from 'express';
 import { middleware as query } from 'querymen';
 import { middleware as body } from 'bodymen';
 import { password as passwordAuth, master, token } from '../../services/passport';
-import { index, show, create, update, destroy } from './controller';
+import { index, show, create, update, destroy, verify } from './controller';
 import { schema } from './model';
 export Provider, { schema } from './model';
 
 const router = new Router();
-const {name, address, description, rating, services, picture} = schema.tree;
+const {name, email, address, description, rating, services, picture} = schema.tree;
 
 /**
  * @api {get} /providers Retrieve providers
@@ -46,12 +46,23 @@ router.get('/:id',
  * @apiParam {Number} rating Provider's rating.
  * @apiParam {String[]} services Provider's services.
  * @apiParam {String} picture Provider's picture.
- * @apiSuccess (Sucess 201) {Object} provider Provider's data.
+ * @apiSuccess (Suсcess 201) {Object} provider Provider's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  */
 router.post('/',
-  body({name, address, description, rating, services, picture}),
+  body({name, email, address, description, rating, services, picture}),
   create);
+
+/**
+ * @api {post} /providers/verify/:verificationKey verify provider
+ * @apiName VerifyProvider
+ * @apiGroup Provider
+ * @apiPermission public
+ * @apiSuccess (Sucсess 201) {Object} provider Provider's data.
+ * @apiError {Object} 400 Provider is not confirmed.
+ */
+router.post('/verify/:verificationKey',
+  verify);
 
 /**
  * @api {put} /providers/:id Update provider

@@ -1,6 +1,7 @@
 import { success, notFound } from '../../services/response/';
 import { Provider } from '.';
 import { createView, createViewList } from '../../services/view';
+import { register, verifyProvider } from '../../services/provider';
 
 export const VIEW_FIELDS = [
   'email',
@@ -29,7 +30,13 @@ export const show = ({ params }, res, next) =>
     .catch(next);
 
 export const create = ({ bodymen: { body } }, res, next) =>
-  Provider.create(body)
+  register(body)
+    .then((provider) => view(provider))
+    .then(success(res, 201))
+    .catch(next);
+
+export const verify = ({ params }, res, next) =>
+  verifyProvider(params.verificationKey)
     .then((provider) => view(provider))
     .then(success(res, 201))
     .catch(next);

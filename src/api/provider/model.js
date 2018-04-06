@@ -10,6 +10,9 @@ const serviceSchema = new Schema({
     required: true,
     trim: true
   },
+  verificationKey: {
+    type: String
+  },
   email: {
     type: String,
     match: /^\S+@\S+\.\S+$/,
@@ -41,6 +44,10 @@ const serviceSchema = new Schema({
   picture: {
     type: String,
     trim: true
+  },
+  active: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true
