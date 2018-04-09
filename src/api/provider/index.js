@@ -4,10 +4,12 @@ import { middleware as body } from 'bodymen';
 import { password as passwordAuth, master, token } from '../../services/passport';
 import { index, show, create, update, destroy, verify } from './controller';
 import { schema } from './model';
+import { schema as userSchema } from '../user';
 export Provider, { schema } from './model';
 
 const router = new Router();
-const {name, email, address, description, rating, services, picture} = schema.tree;
+const { address, description, rating, services } = schema.tree;
+const { name, email, password, picture } = userSchema.tree;
 
 /**
  * @api {get} /providers Retrieve providers
@@ -35,7 +37,7 @@ router.get('/:id',
   show);
 
 /**
- * @api {post} /providers Create provider
+ * @api {post} /providers Create user with role 'provider' and related Provider object.
  * @apiName CreateProvider
  * @apiGroup Provider
  * @apiPermission public
@@ -46,11 +48,11 @@ router.get('/:id',
  * @apiParam {Number} rating Provider's rating.
  * @apiParam {String[]} services Provider's services.
  * @apiParam {String} picture Provider's picture.
- * @apiSuccess (Suсcess 201) {Object} provider Provider's data.
+ * @apiSuccess (Suсcess 201) {Object} user with role 'provider'.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  */
 router.post('/',
-  body({name, email, address, description, rating, services, picture}),
+  body({name, email, address, description, rating, services, picture, password}),
   create);
 
 /**

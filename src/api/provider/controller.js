@@ -7,6 +7,7 @@ export const VIEW_FIELDS = [
   'email',
   'name',
   'address',
+  'role',
   'description',
   'rating',
   'services',

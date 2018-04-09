@@ -4,23 +4,6 @@ import services from '../../data/services.json';
 const serviceIds = services.map(service => service.id);
 
 const serviceSchema = new Schema({
-  name: {
-    type: String,
-    index: true,
-    required: true,
-    trim: true
-  },
-  verificationKey: {
-    type: String
-  },
-  email: {
-    type: String,
-    match: /^\S+@\S+\.\S+$/,
-    required: true,
-    unique: true,
-    trim: true,
-    lowercase: true
-  },
   address: {
     type: String,
     trim: true
@@ -41,13 +24,8 @@ const serviceSchema = new Schema({
       }
     ]
   },
-  picture: {
-    type: String,
-    trim: true
-  },
-  active: {
-    type: Boolean,
-    default: false
+  user: {
+    type: String
   }
 }, {
   timestamps: true

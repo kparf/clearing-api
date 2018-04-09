@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import mongoose, { Schema } from 'mongoose';
 import { env } from '../../config';
 
-const roles = ['user', 'admin']
+const roles = ['client', 'provider', 'admin'];
 
 const userSchema = new Schema({
   email: {
@@ -32,6 +32,16 @@ const userSchema = new Schema({
   picture: {
     type: String,
     trim: true
+  },
+  provider: {
+    type: String
+  },
+  verificationKey: {
+    type: String
+  },
+  active: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true
@@ -50,32 +60,18 @@ userSchema.path('email').set(function (email) {
   return email;
 });
 
-userSchema.pre('save', function (next) {
+/*userSchema.pre('save', function (next) {
   if (!this.isModified('password')) return next()
 
-  /* istanbul ignore next */
   const rounds = env === 'test' ? 1 : 9
 
   bcrypt.hash(this.password, rounds).then((hash) => {
     this.password = hash
     next();
   }).catch(next);
-});
+}); */
 
 userSchema.methods = {
-  view (full) {
-    let view = {};
-    let fields = ['id', 'name', 'picture'];
-
-    if (full) {
-      fields = [...fields, 'email', 'createdAt'];
-    }
-
-    fields.forEach((field) => { view[field] = this[field]; });
-
-    return view;
-  },
-
   authenticate (password) {
     return bcrypt.compare(password, this.password).then((valid) => valid ? this : false);
   }

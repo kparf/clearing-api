@@ -1,25 +1,36 @@
 import { success, notFound } from '../../services/response/';
 import { User } from '.';
+import { registerUser } from '../../services/user';
+import { createView } from '../../services/view';
+
+export const VIEW_FIELDS = [
+  'email',
+  'name',
+  'role',
+  'createdAt',
+  'updatedAt'
+];
+const view = createView(VIEW_FIELDS);
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   User.find(query, select, cursor)
-    .then((users) => users.map((user) => user.view()))
+    .then((users) => users.map((user) => view(user)))
     .then(success(res))
     .catch(next);
 
 export const show = ({ params }, res, next) =>
   User.findById(params.id)
     .then(notFound(res))
-    .then((user) => user ? user.view() : null)
+    .then((user) => user ? view(user) : null)
     .then(success(res))
     .catch(next);
 
 export const showMe = ({ user }, res) =>
-  res.json(user.view(true));
+  res.json(view(user));
 
 export const create = ({ bodymen: { body } }, res, next) =>
-  User.create(body)
-    .then((user) => user.view(true))
+  registerUser(body)
+    .then((user) => view(user))
     .then(success(res, 201))
     .catch((err) => {
       /* istanbul ignore else */
@@ -51,7 +62,7 @@ export const update = ({ bodymen: { body }, params, user }, res, next) =>
       return result;
     })
     .then((user) => user ? Object.assign(user, body).save() : null)
-    .then((user) => user ? user.view(true) : null)
+    .then((user) => user ? view(user) : null)
     .then(success(res))
     .catch(next);
 
@@ -72,7 +83,7 @@ export const updatePassword = ({ bodymen: { body }, params, user }, res, next) =
       return result;
     })
     .then((user) => user ? user.set({ password: body.password }).save() : null)
-    .then((user) => user ? user.view(true) : null)
+    .then((user) => user ? view(user) : null)
     .then(success(res))
     .catch(next);
 
