@@ -48,7 +48,7 @@ router.get('/:id',
  * @apiParam {Number} rating Provider's rating.
  * @apiParam {String[]} services Provider's services.
  * @apiParam {String} picture Provider's picture.
- * @apiSuccess (Suсcess 201) {Object} user with role 'provider'.
+ * @apiSuccess (Success 201) {Object} user with role 'provider'.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  */
 router.post('/',
@@ -60,7 +60,7 @@ router.post('/',
  * @apiName VerifyProvider
  * @apiGroup Provider
  * @apiPermission public
- * @apiSuccess (Sucсess 201) {Object} provider Provider's data.
+ * @apiSuccess (Success 201) {Object} provider Provider's data.
  * @apiError {Object} 400 Provider is not confirmed.
  */
 router.post('/verify/:verificationKey',
