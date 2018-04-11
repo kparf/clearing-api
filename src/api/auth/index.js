@@ -1,6 +1,6 @@
-import { Router } from 'express'
-import { login } from './controller'
-import { password, master } from '../../services/passport'
+import { Router } from 'express';
+import { login } from './controller';
+import { password, master } from '../../services/passport';
 
 const router = new Router()
 
@@ -17,6 +17,6 @@ const router = new Router()
  */
 router.post('/',
   password(),
-  login)
+  login);
 
-export default router
+export default router;
