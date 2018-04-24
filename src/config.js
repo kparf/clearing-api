@@ -39,7 +39,7 @@ const config = {
   },
   test: {
     mongo: {
-      uri: 'mongodb://localhost/clearing-api-test',
+      uri: 'mongodb://mongo/clearing-api-test',
       options: {
         debug: false
       }
@@ -47,7 +47,7 @@ const config = {
   },
   development: {
     mongo: {
-      uri: 'mongodb://localhost/clearing-api-dev',
+      uri: 'mongodb://mongo/clearing-api-dev',
       options: {
         debug: true
       }
@@ -57,7 +57,7 @@ const config = {
     ip: process.env.IP || undefined,
     port: process.env.PORT || 8080,
     mongo: {
-      uri: process.env.MONGODB_URI || 'mongodb://localhost/clearing-api'
+      uri: process.env.MONGODB_URI || 'mongodb://mongo/clearing-api'
     }
   }
 };
