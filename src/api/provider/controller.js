@@ -1,7 +1,7 @@
-import { success, notFound } from '../../services/response/';
+import { success, notFound, badRequest } from '../../services/response/';
 import { Provider } from '.';
 import { createView, createViewList } from '../../services/view';
-import { register, verifyProvider } from '../../services/provider';
+import { register, verifyProvider, search as providerSearch } from '../../services/provider';
 
 export const VIEW_FIELDS = [
   'email',
@@ -56,3 +56,18 @@ export const destroy = ({ params }, res, next) =>
     .then((provider) => provider ? provider.remove() : null)
     .then(success(res, 204))
     .catch(next);
+
+export const search = ({ query }, res, next) => {
+
+  let { services } = query;
+  let serviceList;
+  if (services) {
+    serviceList = services.split(',');
+    providerSearch({services: serviceList})
+      .then((providers) => viewList(providers, VIEW_FIELDS))
+      .then(success(res))
+      .catch(next);
+  } else {
+    badRequest(res);
+  }
+};

@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { middleware as query } from 'querymen';
 import { middleware as body } from 'bodymen';
 import { password as passwordAuth, master, token } from '../../services/passport';
-import { index, show, create, update, destroy, verify } from './controller';
+import { index, show, create, update, destroy, verify, search } from './controller';
 import { schema } from './model';
 import { schema as userSchema } from '../user';
 export Provider, { schema } from './model';
@@ -24,6 +24,19 @@ const { name, email, password, picture } = userSchema.tree;
 router.get('/',
   query(),
   index);
+
+/**
+ * @api {get} /providers Retrieve providers
+ * @apiName SearchProviders
+ * @apiGroup Provider
+ * @apiPermission public
+ * @apiParam {String} access_token User access_token.
+ * @apiUse listParams
+ * @apiSuccess {Object[]} providers List of providers.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ */
+router.get('/search',
+  search);
 
 /**
  * @api {get} /providers/:id Retrieve provider

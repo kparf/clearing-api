@@ -32,6 +32,10 @@ export async function register (req) {
   return savedUser;
 }
 
+export async function search ({ services }) {
+  return Provider.find({services: {$all: services}});
+}
+
 export async function verifyProvider (verificationKey) {
   const user = await User.findOne({verificationKey}).exec();
   if (user) {
