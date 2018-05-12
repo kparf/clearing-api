@@ -3,6 +3,7 @@ import user from './user';
 import auth from './auth';
 import provider from './provider';
 import reservation from './reservation';
+import service from './service';
 
 const router = new Router();
 
@@ -33,5 +34,6 @@ router.use('/users', user);
 router.use('/auth', auth);
 router.use('/providers', provider);
 router.use('/reservations', reservation);
+router.use('/services', service);
 
 export default router;
