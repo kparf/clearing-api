@@ -8,6 +8,7 @@ import { schema as userSchema } from '../user';
 export Provider, { schema } from './model';
 
 const router = new Router();
+// TODO Fix this
 const { address, description, rating, services } = schema.tree;
 const { name, email, password, picture } = userSchema.tree;
 

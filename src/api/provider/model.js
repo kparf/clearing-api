@@ -4,6 +4,10 @@ import services from '../../data/services.json';
 const serviceIds = services.map(service => service.id);
 
 const serviceSchema = new Schema({
+  name: {
+    type: String,
+    trim: true
+  },
   address: {
     type: String,
     trim: true
