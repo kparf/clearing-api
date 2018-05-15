@@ -58,7 +58,6 @@ export const destroy = ({ params }, res, next) =>
     .catch(next);
 
 export const search = ({ query }, res, next) => {
-
   let { services } = query;
   let serviceList;
   if (services) {

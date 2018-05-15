@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { middleware as query } from 'querymen';
 import { middleware as body } from 'bodymen';
-import { index, show, create, update, destroy } from './controller';
+import { index, show, create, update, destroy, search } from './controller';
 import { schema } from './model';
 export Reservation, { schema } from './model';
 
@@ -20,6 +20,18 @@ const { address, description, services, status, providerId, userId, userEmail } 
 router.get('/',
   query(),
   index);
+
+/**
+ * @api {get} /reservations Reservation providers
+ * @apiName SearchReservations
+ * @apiGroup Reservation
+ * @apiPermission public
+ * @apiUse listParams
+ * @apiSuccess {Object[]} providers List of reservations.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ */
+router.get('/search',
+  search);
 
 /**
  * @api {get} /reservations/:id Retrieve reservation

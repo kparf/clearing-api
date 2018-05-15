@@ -1,8 +1,7 @@
 export function createView (viewFields = [], withoutId = false) {
   return (service) => {
     let view = {};
-    let fields = viewFields;
-    fields.forEach((field) => { view[field] = service[field]; });
+    viewFields.forEach((field) => { view[field] = service[field]; });
     if (!withoutId) {
       view.id = service.id;
     }

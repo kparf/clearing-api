@@ -6,6 +6,7 @@ export const VIEW_FIELDS = [
   'email',
   'name',
   'role',
+  'provider',
   'createdAt',
   'updatedAt'
 ];
