@@ -11,6 +11,7 @@ const statuses = [
 const reservationSchema = new Schema({
   status: {
     type: String,
+    default: 'NEW',
     enum: statuses
   },
   address: {
@@ -40,6 +41,12 @@ const reservationSchema = new Schema({
   providerId: {
     type: String,
     required: true
+  },
+  userId: {
+    type: String
+  },
+  userEmail: {
+    type: String
   }
 }, {
   timestamps: true
