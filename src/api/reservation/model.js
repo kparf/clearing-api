@@ -28,8 +28,19 @@ const reservationSchema = new Schema({
         type: String,
         enum: serviceIds
       }
-    ]
+    ],
+    validate: {
+      validator: (v) => {
+        return v.length > 0;
+      },
+      message: '{VALUE} must contain at least one item'
+    },
+    required: true
   },
+  providerId: {
+    type: String,
+    required: true
+  }
 }, {
   timestamps: true
 });

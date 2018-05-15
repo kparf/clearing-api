@@ -6,7 +6,7 @@ import { schema } from './model';
 export Reservation, { schema } from './model';
 
 const router = new Router();
-const {address, description, services, status} = schema.tree;
+const {address, description, services, status, providerId} = schema.tree;
 
 /**
  * @api {get} /reservations Reservation providers
@@ -45,7 +45,7 @@ router.get('/:id',
  * @apiError {Object} 400 Some parameters may contain invalid values.
  */
 router.post('/',
-  body({address, description, services, status}),
+  body({address, description, services, status, providerId}),
   create);
 
 /**
