@@ -1,6 +1,6 @@
 import { sign } from '../../services/jwt';
 import { success } from '../../services/response/';
-import {createView} from '../../services/view';
+import { createView } from '../../services/view';
 
 export const VIEW_FIELDS = [
   'email',
@@ -13,7 +13,7 @@ export const VIEW_FIELDS = [
 const view = createView(VIEW_FIELDS);
 
 export const login = ({ user }, res, next) =>
-  sign(user.id)
-    .then((token) => ({ token, user: view(user) }))
+  sign(view(user))
+    .then((token) => ({ token }))
     .then(success(res, 201))
     .catch(next);
