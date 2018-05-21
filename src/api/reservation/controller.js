@@ -49,9 +49,21 @@ export const destroy = ({ params }, res, next) =>
     .catch(next);
 
 export const search = ({ query }, res, next) => {
-  let { provider } = query;
+  let { provider, services, statuses } = query;
   if (provider) {
-    reservationSearch({ provider })
+    let serviceList, statusesList;
+    if (services) {
+      serviceList = services.split(',');
+    }
+    if (statuses) {
+      statusesList = statuses.split(',');
+    }
+
+    reservationSearch({
+      provider,
+      services: serviceList,
+      statuses: statusesList
+    })
       .then((reservations) => viewList(reservations, VIEW_FIELDS))
       .then(success(res))
       .catch(next);
