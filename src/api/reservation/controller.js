@@ -26,6 +26,7 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
 export const show = ({ params }, res, next) =>
   Reservation.findById(params.id)
     .then(notFound(res))
+    .then(view)
     .then(success(res))
     .catch(next);
 

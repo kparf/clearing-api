@@ -26,19 +26,19 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
 export const show = ({ params }, res, next) =>
   Provider.findById(params.id)
     .then(notFound(res))
-    .then((provider) => view(provider))
+    .then(view)
     .then(success(res))
     .catch(next);
 
 export const create = ({ bodymen: { body } }, res, next) =>
   register(body)
-    .then((provider) => view(provider))
+    .then(view)
     .then(success(res, 201))
     .catch(next);
 
 export const verify = ({ params }, res, next) =>
   verifyProvider(params.verificationKey)
-    .then((provider) => view(provider))
+    .then(view)
     .then(success(res, 201))
     .catch(next);
 
@@ -46,7 +46,7 @@ export const update = ({ bodymen: { body }, params }, res, next) =>
   Provider.findById(params.id)
     .then(notFound(res))
     .then((provider) => provider ? Object.assign(provider, body).save() : null)
-    .then((provider) => view(provider))
+    .then(view)
     .then(success(res))
     .catch(next);
 
