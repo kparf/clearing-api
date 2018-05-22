@@ -51,6 +51,14 @@ export const confirm = ({ params }, res, next) =>
     .then(success(res))
     .catch(next);
 
+export const cancel = ({ body, params }, res, next) =>
+  Reservation.findById(params.id)
+    .then(notFound(res))
+    .then((reservation) => reservation ? Object.assign(reservation, {status: 'CANCELLED', comment: body.comment}).save() : null)
+    .then(view)
+    .then(success(res))
+    .catch(next);
+
 export const destroy = ({ params }, res, next) =>
   Reservation.findById(params.id)
     .then(notFound(res))

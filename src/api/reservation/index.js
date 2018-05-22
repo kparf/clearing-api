@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { middleware as query } from 'querymen';
 import { middleware as body } from 'bodymen';
-import { index, show, create, update, destroy, search, confirm } from './controller';
+import { index, show, create, update, destroy, search, confirm, cancel } from './controller';
 import { schema } from './model';
 export Reservation, { schema } from './model';
 
@@ -80,7 +80,7 @@ router.put('/:id',
   update);
 
 /**
- * @api {put} /reservations/confirm/:id Update provider
+ * @api {put} /reservations/:id/confirm Update provider
  * @apiName ConfirmReservation
  * @apiGroup Reservation
  * @apiPermission public
@@ -88,8 +88,20 @@ router.put('/:id',
  * @apiSuccess {Object} provider Reservation's data.
  * @apiError 404 Reservation not found.
  */
-router.put('/confirm/:id',
+router.put('/:id/confirm',
   confirm);
+
+/**
+ * @api {put} /reservations/:id/cancel Update provider
+ * @apiName CancelReservation
+ * @apiGroup Reservation
+ * @apiPermission public
+ * @apiParam {String} id Reservation's id.
+ * @apiSuccess {Object} provider Reservation's data.
+ * @apiError 404 Reservation not found.
+ */
+router.put('/:id/cancel',
+  cancel);
 
 /**
  * @api {delete} /reservations/:id Delete reservation

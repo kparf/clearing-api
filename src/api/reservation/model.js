@@ -47,6 +47,9 @@ const reservationSchema = new Schema({
   },
   userEmail: {
     type: String
+  },
+  comment: {
+    type: String
   }
 }, {
   timestamps: true
