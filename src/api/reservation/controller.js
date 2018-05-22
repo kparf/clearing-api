@@ -38,7 +38,16 @@ export const create = ({ bodymen: { body } }, res, next) =>
 export const update = ({ bodymen: { body }, params }, res, next) =>
   Reservation.findById(params.id)
     .then(notFound(res))
-    .then((provider) => provider ? Object.assign(provider, body).save() : null)
+    .then((reservation) => reservation ? Object.assign(reservation, body).save() : null)
+    .then(view)
+    .then(success(res))
+    .catch(next);
+
+export const confirm = ({ params }, res, next) =>
+  Reservation.findById(params.id)
+    .then(notFound(res))
+    .then((reservation) => reservation ? Object.assign(reservation, {status: 'CONFIRMED'}).save() : null)
+    .then(view)
     .then(success(res))
     .catch(next);
 
